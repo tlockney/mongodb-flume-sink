@@ -81,7 +81,7 @@ public class MongoDBSink extends EventSink.Base {
       // construct a new parameterized sink
       @Override
       public EventSink build(Context context, String... argv) {
-        Preconditions.checkArgument(argv.length == 3,
+        Preconditions.checkArgument(argv.length == 4,
             "usage: mongoDBSink(\"server\",\"port\",\"db\",\"collection\")");
 
         return new MongoDBSink(argv[0], argv[1], argv[2], argv[3]);
