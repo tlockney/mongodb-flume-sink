@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<project name="mongodb-sink" default="jar">
+  <property name="javac.debug" value="on"/>
+  <property name="flume.base" value="../.."/>
+
+  <path id="classpath">
+    <!-- in case we are running in dev env -->
+    <pathelement location="${flume.base}/build/classes"/>
+    <fileset dir="${flume.base}/lib">
+      <include name="**/google-collect*.jar" />
+      <include name="**/guava*.jar" />
+      <include name="**/log4j-*.jar" />
+    	<include name="**/slf4j-*.jar" />
+    </fileset>
+    <!-- in case we are running in release env -->
+    <fileset dir="${flume.base}">
+      <include name="flume-*.jar" />
+    </fileset>
+    <pathelement location="${flume.base}/lib/"/>
+  	<pathelement location="./lib/mongo-2.3.jar"/>
+  </path>
+
+  <target name="jar">
+    <mkdir dir="build"/>
+    <mkdir dir="build/classes"/>
+
+    <javac srcdir="./src/java" destdir="build/classes" debug="${javac.debug}">
+      <classpath refid="classpath"/>
+    </javac>   
+
+    <jar jarfile="mongodb-sink_plugin.jar" basedir="build/classes"/>
+  </target>
+
+  <target name="clean">
+    <echo message="Cleaning generated files and stuff"/>
+    <delete dir="build" />
+    <delete file="mongodb-sink_plugin.jar" />
+  </target>
+
+</project>
